@@ -24,7 +24,7 @@ private:
     const int y_center = costmap_height_ / 2; //puts the robot in the center of the costmap grid (bc the vector cant have negative indeces)
 
     const double resolution_ = 0.1;  // resolution in meters per cell
-    const int inflation_radius_ = 1; //inflation radius in meters
+    const int inflation_radius_ = 1.5; //inflation radius in meters
 
     
 };
