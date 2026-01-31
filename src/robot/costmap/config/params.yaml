@@ -1,3 +1,14 @@
-# costmap_node:
-#   ros__parameters:
+costmap_node:
+   ros__parameters:
+    costmap:
+      resolution: 0.1
+      width: 300
+      height: 300
 
+      origin:
+        position:
+          x: -150.0
+          y: -150.0
+        orientation:
+          w: 1.0
+      inflation radius: 1.0

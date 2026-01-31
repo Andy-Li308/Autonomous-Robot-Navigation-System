@@ -13,6 +13,9 @@ endif()
 # Search for dependencies required for building this package
 find_package(ament_cmake REQUIRED) # ROS2 build tool
 find_package(rclcpp REQUIRED)      # ROS2 C++ package
+find_package(nav_msgs REQUIRED)    # For Path and Odometry
+find_package(geometry_msgs REQUIRED) # For Twist
+find_package(sensor_msgs REQUIRED)  # For LaserScan
 
 # Compiles source files into a library
 # A library is not executed, instead other executables can link
@@ -21,20 +24,27 @@ find_package(rclcpp REQUIRED)      # ROS2 C++ package
 # both the unit test and ROS2 node executables.
 add_library(costmap_lib
   src/costmap_core.cpp)
+
 # Indicate to compiler where to search for header files
 target_include_directories(costmap_lib
   PUBLIC include)
+
 # Add ROS2 dependencies required by package
-ament_target_dependencies(costmap_lib rclcpp)
+ament_target_dependencies(costmap_lib rclcpp nav_msgs geometry_msgs sensor_msgs)
 
 # Create ROS2 node executable from source files
 add_executable(costmap_node src/costmap_node.cpp)
+
 # Link to the previously built library to access costmap classes and methods
 target_link_libraries(costmap_node costmap_lib)
+
+# Add ROS2 dependencies required by the executable
+ament_target_dependencies(costmap_node rclcpp nav_msgs geometry_msgs sensor_msgs)
 
 # Copy executable to installation location
 install(TARGETS
   costmap_node
+  costmap_lib
   DESTINATION lib/${PROJECT_NAME})
 
 # Copy launch and config files to installation location
